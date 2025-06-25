@@ -31,7 +31,8 @@ Access the app at:
 
 http://127.0.0.1:8000/
 
-Usage Instructions
+Usage Instructions:
+
 Register or log in
 Create or join a group
 Add expenses and view balances
