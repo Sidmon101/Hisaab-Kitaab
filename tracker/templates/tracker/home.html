@@ -1,0 +1,46 @@
+{% extends 'tracker/base.html' %}
+{% load static %}
+
+{% block title %}Home | Hissab Kitaab{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <h2>Welcome, {{ user.username }} 👋</h2>
+  <div style="font-size: 1.1rem; font-weight: 500;">
+    {% if total_balance > 0 %}
+      <span class="owed">Total Owed: ₹{{ total_balance|floatformat:2 }} </span>
+    {% elif total_balance < 0 %}
+      <span class="owe">You Owe: ₹{{ total_balance|floatformat:2|slice:"1:" }}</span>
+    {% else %}
+      <span class="settled">All Settled</span>
+    {% endif %}
+  </div>
+</div>
+
+<div class="actions" style="margin-top: 20px;">
+  <a href="{% url 'create_group' %}" class="btn">➕ Create Group</a>
+  <a href="{% url 'join_group' %}" class="btn secondary">🔍 Join Group</a>
+</div>
+
+<h3 style="margin-top: 40px;">Your Groups</h3>
+
+{% if groups %}
+  <div class="balance-cards">
+    {% for group in groups %}
+      <div class="card">
+        <h4>{{ group.name }}</h4>
+        <p>
+          {% if group.admin == user %}
+            <span class="owed">You are the Admin</span>
+          {% else %}
+            <span class="settled">Member</span>
+          {% endif %}
+        </p>
+        <a href="{% url 'group_dashboard' group.id %}" class="btn small">View Dashboard</a>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-muted">You are not part of any groups yet.</p>
+{% endif %}
+{% endblock %}

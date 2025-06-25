@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Hisaab Kitaab{% endblock %}</title>
+    {% load static %}
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+</head>
+<body>
+  <div class="navbar">
+<h1 style="font-family: 'Monaco', monospace; font-weight: bold; font-size: 2em; color: white;">
+ 💸 Hissab Kitaab
+</h1>
+
+
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="margin:10px;background: none; border: none; color: white; cursor: pointer; font: inherit; padding: 0;">
+                Logout
+            </button>
+        </form>
+    </div>
+</div>
+
+
+    </div>
+  </div>
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

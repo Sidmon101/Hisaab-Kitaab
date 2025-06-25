@@ -1,0 +1,64 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}Create Account | Hissab Kitaab{% endblock %}
+
+{% block content %}
+<div class="styled-form">
+    <h2 class="form-title" style="text-align: center; font-size: 1.8rem; margin-bottom: 25px;">Create Your Account</h2>
+
+    {% if form.errors %}
+        <div class="alert alert-danger" style="margin-bottom: 20px; padding: 15px; border-radius: 6px; background-color: #ffe6e6; color: #c0392b;">
+            <ul class="errorlist" style="list-style: none; padding-left: 0;">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="post" id="signup-form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+            <small class="form-text" style="color: #555;">
+                Password must be at least 8 characters long and include letters and numbers.
+            </small>
+            <ul id="password-rules" style="margin-top: 10px; font-size: 0.9rem; color: #555;">
+                <li id="length-rule">✔ At least 8 characters</li>
+                <li id="number-rule">✔ Contains a number</li>
+                <li id="letter-rule">✔ Contains a letter</li>
+            </ul>
+        </div>
+        <div class="form-group">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+        </div>
+        <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Sign Up</button>
+    </form>
+
+    <p class="form-footer" style="text-align: center; margin-top: 20px;">
+        Already have an account? <a href="{% url 'login' %}">Log in here</a>
+    </p>
+</div>
+
+<script>
+    const passwordInput = document.getElementById("id_password1");
+    const lengthRule = document.getElementById("length-rule");
+    const numberRule = document.getElementById("number-rule");
+    const letterRule = document.getElementById("letter-rule");
+
+    passwordInput.addEventListener("input", function () {
+        const value = passwordInput.value;
+        lengthRule.style.color = value.length >= 8 ? "green" : "#555";
+        numberRule.style.color = /\d/.test(value) ? "green" : "#555";
+        letterRule.style.color = /[a-zA-Z]/.test(value) ? "green" : "#555";
+    });
+</script>
+{% endblock %}

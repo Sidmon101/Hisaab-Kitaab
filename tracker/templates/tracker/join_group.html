@@ -1,0 +1,16 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+  <h2 class="center-heading" style="text-align:center;">Join an Existing Group</h2>
+
+  <form method="post" class="styled-form">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.group.label_tag }}
+      {{ form.group }}
+    </div>
+    <div style="text-align: center;">
+      <button type="submit" class="btn">Join Group</button>
+    </div>
+  </form>
+{% endblock %}
